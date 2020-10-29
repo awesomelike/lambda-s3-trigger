@@ -1,0 +1,12 @@
+version = 0.1
+[personal]
+[personal.deploy]
+[personal.deploy.parameters]
+stack_name = "lambda-s3-test"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-os5xgbxzn1sm"
+s3_prefix = "lambda-s3-test"
+region = "us-east-1"
+profile = "personal"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "AppBucketName=\"lambda-s3-10e60bcc54b4\""

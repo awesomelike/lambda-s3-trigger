@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  lambda-s3
+
+Parameters:
+  AppBucketName: 
+    Type: String
+    Description: 'AWS S3 bucket name'
+Resources:
+  S3JsonLoggerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/s3-json-logger.s3JsonLoggerHandler
+      Runtime: nodejs12.x
+      MemorySize: 128
+      Timeout: 60
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - 's3:GetObject'
+              Resource: '*'
+      Events:
+        S3NewObjectEvent:
+          Type: S3
+          Properties:
+            Bucket: !Ref AppBucket
+            Events: s3:ObjectCreated:*
+  AppBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref AppBucketName
